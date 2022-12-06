@@ -15,6 +15,12 @@
             "request": "launch",
             "type": "dart",
             "program": "example2/lib/main.dart",
+        },
+        {
+            "name": "example3",
+            "request": "launch",
+            "type": "dart",
+            "program": "example3/lib/main.dart",
         }
     ]
 }

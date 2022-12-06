@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:medlix_sso/medlix_sso.dart';
 
-const key = 'secure_key_test';
+const key = 'secure_key_test_134u1984';
 
-final storage = FlutterSecureStorage(
-  iOptions: IOSOptions.defaultOptions.copyWith(
-    groupId: 'org.medlix.SharedItems',
-  ),
+final storage = MedlixSso(
+  iosTeamId: 'J3QC37L24N',
+  iosGroupId: 'org.medlix.SharedItems',
 );
 
 void main() async {
@@ -82,6 +81,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     value = (int.parse(value) + 1).toString();
     await storage.write(key: key, value: value);
     debugPrint(await storage.read(key: key));
+
+    value = await storage.read(key: key);
 
     setState(() {
       _counter = value;
