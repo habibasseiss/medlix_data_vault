@@ -68,7 +68,7 @@ packages:
       path: "packages/flutter_secure_storage/flutter_secure_storage"
       relative: true
     source: path
-    version: "6.1.0-beta.1"
+    version: "6.1.0"
   flutter_secure_storage_linux:
     dependency: transitive
     description:
