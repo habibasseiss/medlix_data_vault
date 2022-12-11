@@ -1,12 +1,18 @@
-import 'medlix_sso_platform_interface.dart';
+library medlix_sso;
+
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+import 'package:medlix_sso/medlix_sso_platform_interface.dart';
+
+part 'options/ios_options.dart';
+part 'options/options.dart';
 
 class MedlixSso {
-  final String? iosTeamId;
-  final String? iosGroupId;
+  final IosOptions iosOptions;
 
   MedlixSso({
-    this.iosTeamId,
-    this.iosGroupId,
+    this.iosOptions = IosOptions.defaultOptions,
   });
 
   Future<String?> getPlatformVersion() {
@@ -29,18 +35,12 @@ class MedlixSso {
   }
 
   Map<String, String> get _buildOptions {
-    final options = <String, String>{};
-    if (prefixedGroupId != null) {
-      options['groupId'] = prefixedGroupId!;
+    if (Platform.isIOS) {
+      return iosOptions.params;
+    } else if (Platform.isAndroid) {
+      return {};
+    } else {
+      return {};
     }
-    return options;
-  }
-
-  String? get prefixedGroupId {
-    // concatenate the teamId and groupId
-    if (iosTeamId != null && iosGroupId != null) {
-      return '$iosTeamId.$iosGroupId';
-    }
-    return null;
   }
 }

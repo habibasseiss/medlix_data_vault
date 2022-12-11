@@ -2,6 +2,11 @@
 
 A new Flutter plugin project.
 
+## How it works
+
+This plugin uses the [Keychain Sharing](https://developer.apple.com/documentation/security/keychain_services/keychain_items/sharing_access_to_keychain_items_among_a_collection_of_apps)
+capability on iOS to share data between apps.
+
 ## Configuration
 
 ### iOS
@@ -26,6 +31,19 @@ following line for each `buildSettings` entry:
 
 ```
 CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+```
+
+In addition to configuring the native iOS app, it's necessary to instantiate the
+plugin in Dart code using the `IosOptions` class. The following code shows how
+to instantiate the plugin:
+
+```dart
+final sso = MedlixSso(
+  iosOptions: const IosOptions(
+    teamId: 'J3QC37L24N',              // Your Apple Developer Team ID
+    groupId: 'org.medlix.SharedItems', // The keychain group ID
+  ),
+);
 ```
 
 #### Examples

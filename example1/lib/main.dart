@@ -4,8 +4,10 @@ import 'package:medlix_sso/medlix_sso.dart';
 const key = 'secure_key_test_134u1984';
 
 final storage = MedlixSso(
-  iosTeamId: 'J3QC37L24N',
-  iosGroupId: 'org.medlix.SharedItems',
+  iosOptions: const IosOptions(
+    teamId: 'J3QC37L24N',
+    groupId: 'org.medlix.SharedItems',
+  ),
 );
 
 void main() async {
