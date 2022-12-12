@@ -1,6 +1,11 @@
-# medlix_sso
+# MedlixDataVault
 
-A new Flutter plugin project.
+This Flutter plugin allows developers to create apps that can securely share
+data with other apps that are part of the same group or organization. The plugin
+provides a secure way to store and retrieve data using the organization's
+identifier, ensuring that only authorized apps can access the shared data. This
+is useful for creating apps that need to share sensitive information, such as
+API authentication tokens, within a specific group or organization.
 
 ## How it works
 
@@ -38,7 +43,7 @@ plugin in Dart code using the `IosOptions` class. The following code shows how
 to instantiate the plugin:
 
 ```dart
-final sso = MedlixSso(
+final sso = MedlixDataVault(
   iosOptions: const IosOptions(
     teamId: 'J3QC37L24N',              // Your Apple Developer Team ID
     groupId: 'org.medlix.SharedItems', // The keychain group ID

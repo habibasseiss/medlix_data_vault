@@ -1,4 +1,4 @@
-part of medlix_sso;
+part of medlix_data_vault;
 
 class IosOptions extends Options {
   final String? _teamId;

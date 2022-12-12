@@ -88,7 +88,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.5"
-  medlix_sso:
+  medlix_data_vault:
     dependency: "direct main"
     description:
       path: ".."

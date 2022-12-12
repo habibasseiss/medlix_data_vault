@@ -1,4 +1,4 @@
-group 'com.example.medlix_sso'
+group 'org.medlix.medlix_data_vault'
 version '1.0-SNAPSHOT'
 
 buildscript {

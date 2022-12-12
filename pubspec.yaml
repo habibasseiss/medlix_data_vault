@@ -1,5 +1,5 @@
-name: medlix_sso
-description: A new Flutter plugin project.
+name: medlix_data_vault
+description: This plugin enables secure data sharing between apps within a group or organization.
 version: 0.0.1
 homepage: https://www.erasmusmc.nl/
 
@@ -35,7 +35,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.medlix_sso
-        pluginClass: MedlixSsoPlugin
+        package: org.medlix.medlix_data_vault
+        pluginClass: MedlixDataVaultPlugin
       ios:
-        pluginClass: MedlixSsoPlugin
+        pluginClass: MedlixDataVaultPlugin

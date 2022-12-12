@@ -1,26 +1,26 @@
-library medlix_sso;
+library medlix_data_vault;
 
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:medlix_sso/medlix_sso_platform_interface.dart';
+import 'package:medlix_data_vault/medlix_data_vault_platform_interface.dart';
 
 part 'options/ios_options.dart';
 part 'options/options.dart';
 
-class MedlixSso {
+class MedlixDataVault {
   final IosOptions iosOptions;
 
-  MedlixSso({
+  MedlixDataVault({
     this.iosOptions = IosOptions.defaultOptions,
   });
 
   Future<String?> getPlatformVersion() {
-    return MedlixSsoPlatform.instance.getPlatformVersion();
+    return MedlixDataVaultPlatform.instance.getPlatformVersion();
   }
 
   Future<void> write({required String key, required String value}) {
-    return MedlixSsoPlatform.instance.write(
+    return MedlixDataVaultPlatform.instance.write(
       key: key,
       value: value,
       options: _buildOptions,
@@ -28,7 +28,7 @@ class MedlixSso {
   }
 
   Future<String?> read({required String key}) {
-    return MedlixSsoPlatform.instance.read(
+    return MedlixDataVaultPlatform.instance.read(
       key: key,
       options: _buildOptions,
     );

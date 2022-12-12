@@ -1,9 +1,9 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint medlix_sso.podspec` to validate before publishing.
+# Run `pod lib lint medlix_data_vault.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'medlix_sso'
+  s.name             = 'medlix_data_vault'
   s.version          = '0.0.1'
   s.summary          = 'A new Flutter plugin project.'
   s.description      = <<-DESC

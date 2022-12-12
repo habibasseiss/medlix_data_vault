@@ -1,4 +1,4 @@
-part of medlix_sso;
+part of medlix_data_vault;
 
 abstract class Options {
   const Options();

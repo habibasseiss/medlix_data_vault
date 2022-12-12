@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:medlix_sso/medlix_sso.dart';
+import 'package:medlix_data_vault/medlix_data_vault.dart';
 
 const key = 'secure_key_test_134u1984';
 
-final storage = MedlixSso(
+final storage = MedlixDataVault(
   iosOptions: const IosOptions(
     teamId: 'J3QC37L24N',
     groupId: 'org.medlix.SharedItems',

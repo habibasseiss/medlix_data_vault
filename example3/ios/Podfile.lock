@@ -1,21 +1,21 @@
 PODS:
   - Flutter (1.0.0)
-  - medlix_sso (0.0.1):
+  - medlix_data_vault (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - medlix_sso (from `.symlinks/plugins/medlix_sso/ios`)
+  - medlix_data_vault (from `.symlinks/plugins/medlix_data_vault/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  medlix_sso:
-    :path: ".symlinks/plugins/medlix_sso/ios"
+  medlix_data_vault:
+    :path: ".symlinks/plugins/medlix_data_vault/ios"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  medlix_sso: 581d7351e3b0a4b78e788ee594844eea82ed958c
+  medlix_data_vault: 97ba0268d4a9a9d3a846ec357f692b1363e35267
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 

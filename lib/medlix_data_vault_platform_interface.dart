@@ -1,24 +1,24 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'medlix_sso_method_channel.dart';
+import 'medlix_data_vault_method_channel.dart';
 
-abstract class MedlixSsoPlatform extends PlatformInterface {
-  /// Constructs a MedlixSsoPlatform.
-  MedlixSsoPlatform() : super(token: _token);
+abstract class MedlixDataVaultPlatform extends PlatformInterface {
+  /// Constructs a MedlixDataVaultPlatform.
+  MedlixDataVaultPlatform() : super(token: _token);
 
   static final Object _token = Object();
 
-  static MedlixSsoPlatform _instance = MethodChannelMedlixSso();
+  static MedlixDataVaultPlatform _instance = MethodChannelMedlixDataVault();
 
-  /// The default instance of [MedlixSsoPlatform] to use.
+  /// The default instance of [MedlixDataVaultPlatform] to use.
   ///
-  /// Defaults to [MethodChannelMedlixSso].
-  static MedlixSsoPlatform get instance => _instance;
+  /// Defaults to [MethodChannelMedlixDataVault].
+  static MedlixDataVaultPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own
-  /// platform-specific class that extends [MedlixSsoPlatform] when
+  /// platform-specific class that extends [MedlixDataVaultPlatform] when
   /// they register themselves.
-  static set instance(MedlixSsoPlatform instance) {
+  static set instance(MedlixDataVaultPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }
