@@ -38,9 +38,22 @@ following line for each `buildSettings` entry:
 CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 ```
 
-In addition to configuring the native iOS app, it's necessary to instantiate the
-plugin in Dart code using the `IosOptions` class. The following code shows how
-to instantiate the plugin:
+### Android
+
+On Android, the plugin uses the [EncryptedSharedPreferences](https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences) class to securely
+store data, which requires the minimum API level to be 23 (Android 6.0).
+Therefore, the `minSdkVersion` in the `android/app/build.gradle` file must be
+set to 23 or higher.
+
+### Flutter
+
+Make sure that the `WidgetsFlutterBinding.ensureInitialized();` line is called
+in the `main()` function before using the plugin. This is necessary to ensure
+that the plugin is initialized correctly.
+
+For the plugin to work on ioS, in addition to configuring the native app, it's
+necessary to instantiate the plugin in Dart code using the `IosOptions` class.
+The following code shows how to instantiate the plugin:
 
 ```dart
 final sso = MedlixDataVault(
