@@ -6,7 +6,7 @@ public class SwiftMedlixDataVaultPlugin: NSObject, FlutterPlugin {
   private let flutterSecureStorageManager: FlutterSecureStorage = FlutterSecureStorage()
   
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "nl.erasmusmc.medlix/data_vault", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "org.medlix.plugins/data_vault", binaryMessenger: registrar.messenger())
     let instance = SwiftMedlixDataVaultPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }

@@ -7,7 +7,7 @@ import 'medlix_data_vault_platform_interface.dart';
 class MethodChannelMedlixDataVault extends MedlixDataVaultPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('nl.erasmusmc.medlix/data_vault');
+  final methodChannel = const MethodChannel('org.medlix.plugins/data_vault');
 
   @override
   Future<String?> getPlatformVersion() async {

@@ -17,7 +17,7 @@ class MedlixDataVaultPlugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "medlix_data_vault")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "org.medlix.plugins/data_vault")
     channel.setMethodCallHandler(this)
   }
 
