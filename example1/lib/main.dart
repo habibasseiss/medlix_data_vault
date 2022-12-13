@@ -91,6 +91,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     });
   }
 
+  void _removeKey() async {
+    await storage.delete(key: key);
+
+    debugPrint('key $key removed');
+
+    setState(() {
+      _counter = '0';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,9 +110,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'The following value is stored in the "data vault" and shared among apps in the same group:',
+                textAlign: TextAlign.center,
+              ),
             ),
             Text(
               _counter ?? '0',
@@ -111,10 +125,21 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            onPressed: _incrementCounter,
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: _removeKey,
+            tooltip: 'Increment',
+            child: const Icon(Icons.delete),
+          ),
+        ],
       ),
     );
   }

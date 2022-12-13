@@ -26,6 +26,14 @@ class MockMedlixDataVaultPlatform
   }) async {
     return Future.value();
   }
+
+  @override
+  Future<void> delete({
+    required String key,
+    required Map<String, String> options,
+  }) async {
+    return Future.value();
+  }
 }
 
 void main() {

@@ -34,12 +34,20 @@ class MethodChannelMedlixDataVault extends MedlixDataVaultPlatform {
     required String key,
     required Map<String, String> options,
   }) async {
-    return await methodChannel.invokeMethod<String?>(
-      'read',
-      {
-        'key': key,
-        'options': options,
-      },
-    );
+    return await methodChannel.invokeMethod<String?>('read', {
+      'key': key,
+      'options': options,
+    });
+  }
+
+  @override
+  Future<void> delete({
+    required String key,
+    required Map<String, String> options,
+  }) async {
+    await methodChannel.invokeMethod<void>('delete', {
+      'key': key,
+      'options': options,
+    });
   }
 }

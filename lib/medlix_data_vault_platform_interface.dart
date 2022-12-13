@@ -41,4 +41,11 @@ abstract class MedlixDataVaultPlatform extends PlatformInterface {
   }) {
     throw UnimplementedError('read() has not been implemented.');
   }
+
+  Future<void> delete({
+    required String key,
+    required Map<String, String> options,
+  }) {
+    throw UnimplementedError('delete() has not been implemented.');
+  }
 }

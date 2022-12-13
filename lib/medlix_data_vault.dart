@@ -15,12 +15,14 @@ class MedlixDataVault {
     this.iosOptions = IosOptions.defaultOptions,
   });
 
+  MedlixDataVaultPlatform get _platform => MedlixDataVaultPlatform.instance;
+
   Future<String?> getPlatformVersion() {
-    return MedlixDataVaultPlatform.instance.getPlatformVersion();
+    return _platform.getPlatformVersion();
   }
 
   Future<void> write({required String key, required String value}) {
-    return MedlixDataVaultPlatform.instance.write(
+    return _platform.write(
       key: key,
       value: value,
       options: _buildOptions,
@@ -28,7 +30,14 @@ class MedlixDataVault {
   }
 
   Future<String?> read({required String key}) {
-    return MedlixDataVaultPlatform.instance.read(
+    return _platform.read(
+      key: key,
+      options: _buildOptions,
+    );
+  }
+
+  Future<void> delete({required String key}) {
+    return _platform.delete(
       key: key,
       options: _buildOptions,
     );

@@ -19,8 +19,8 @@ public class SwiftMedlixDataVaultPlugin: NSObject, FlutterPlugin {
             read(call, result)
         case "write":
             write(call, result)
-        // case "delete":
-        //     delete(call, result)
+        case "delete":
+            delete(call, result)
         // case "deleteAll":
         //     deleteAll(call, result)
         // case "readAll":
@@ -61,6 +61,18 @@ public class SwiftMedlixDataVaultPlugin: NSObject, FlutterPlugin {
         }
         
         let response = flutterSecureStorageManager.write(key: values.key!, value: values.value!, groupId: values.groupId, accountName: values.accountName, synchronizable: values.synchronizable, accessibility: values.accessibility)
+        
+        result(response)
+    }
+
+    private func delete(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let values = parseCall(call)
+        if (values.key == nil) {
+            result(FlutterError.init(code: "Missing Parameter", message: "delete requires key parameter", details: nil))
+            return
+        }
+        
+        let response = flutterSecureStorageManager.delete(key: values.key!, groupId: values.groupId, accountName: values.accountName, synchronizable: values.synchronizable)
         
         result(response)
     }
