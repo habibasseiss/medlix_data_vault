@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.medlix.medlix_data_vault">
+
+    <!-- Using permission to behave like a requesting app -->
+    <uses-permission android:name="${applicationId}.medlix_data_vault.permissions.DATA_VAULT_PROVIDER" />
+
+    <!-- Declaring permission to behave like a provider app-->
+    <permission
+        android:name="${applicationId}.medlix_data_vault.permissions.DATA_VAULT_PROVIDER"
+        android:protectionLevel="signature" />
+
+    <application>
+        <provider
+            android:name=".MedlixDataVaultContentProvider"
+            android:authorities="${applicationId}.medlix_data_vault.provider"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="${applicationId}.medlix_data_vault.permissions.DATA_VAULT_PROVIDER" />
+    </application>
+
 </manifest>

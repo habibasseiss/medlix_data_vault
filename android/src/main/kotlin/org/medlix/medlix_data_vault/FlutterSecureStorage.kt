@@ -7,16 +7,17 @@ import androidx.security.crypto.MasterKeys
 import java.io.IOException
 import java.security.GeneralSecurityException
 
-class FlutterSecureStorage(context: Context?) {
+class FlutterSecureStorage(context: Context) {
     private lateinit var preferences: SharedPreferences
 
     init {
         try {
             val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+
             preferences = EncryptedSharedPreferences.create(
                 PREFERENCES_FILE_NAME,
                 masterKeyAlias,
-                context!!,
+                context,
                 EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             )

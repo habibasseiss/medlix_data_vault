@@ -15,11 +15,14 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
     private lateinit var flutterSecureStorage: FlutterSecureStorage
+    private lateinit var contentProvider: MedlixDataVaultContentProvider
+
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPluginBinding) {
         channel =
             MethodChannel(flutterPluginBinding.binaryMessenger, "org.medlix.plugins/data_vault")
         channel.setMethodCallHandler(this)
         flutterSecureStorage = FlutterSecureStorage(flutterPluginBinding.applicationContext)
+        contentProvider = MedlixDataVaultContentProvider()
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
