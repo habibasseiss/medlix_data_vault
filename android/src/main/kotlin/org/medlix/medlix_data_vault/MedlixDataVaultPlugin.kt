@@ -26,9 +26,9 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
         channel =
             MethodChannel(flutterPluginBinding.binaryMessenger, "org.medlix.plugins/data_vault")
         channel.setMethodCallHandler(this)
+
         flutterSecureStorage = FlutterSecureStorage(flutterPluginBinding.applicationContext)
         contentProvider = MedlixDataVaultContentProvider()
-
         contentResolver = flutterPluginBinding.applicationContext.contentResolver
     }
 
@@ -39,24 +39,13 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
             }
             "read" -> {
                 val key = call.argument<String>("key")
-                val value = flutterSecureStorage.read(key)
-                result.success(value)
+                var value: String? = null
 
-                val uri = Uri.parse("content://org.medlix.example1.medlix_data_vault.provider/keys/$key")
-
-                val cursor = contentResolver.query(
-                    uri, arrayOf("value"),
-                    null, null, null
-                )
-
-                cursor?.let {
-                    while (it.moveToNext()) {
-                        val contentValue = it.getString(0)
-                        Log.d(TAG, "key: $key, value: $contentValue")
-                    }
+                if (key != null) {
+                    value = getKey(key)
                 }
 
-                cursor?.close()
+                result.success(value)
             }
             "write" -> {
                 val key = call.argument<String>("key")
@@ -75,11 +64,50 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
         }
     }
 
+    private fun getKey(key: String): String? {
+        var value: String? = null
+
+        for (providerAuthority in providerAthorities) {
+            try {
+                val providerUri = "content://$providerAuthority/keys/$key"
+                val cursor = contentResolver.query(
+                    Uri.parse(providerUri), // The provider Uri
+                    arrayOf("value"), // Return the "value" column
+                    null, // Return all rows
+                    null, // No selection arguments
+                    null // Default sort order
+                )
+
+                cursor?.let {
+                    while (it.moveToNext()) {
+                        value = it.getString(0)
+                        Log.d(TAG, "key: $key, value: $value")
+                    }
+                }
+
+                cursor?.close()
+
+                return value
+            } catch (e: Exception) {
+                Log.e(TAG, "Cannot get key from provider: $providerAuthority", e)
+            }
+        }
+
+        return null
+    }
+
     override fun onDetachedFromEngine(binding: FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
 
     companion object {
         const val TAG = "MedlixDataVaultPlugin"
+
+        // TODO: make this configurable
+        private val providerAthorities = arrayOf(
+            "org.medlix.example1.medlix_data_vault.provider",
+            "org.medlix.example2.medlix_data_vault.provider",
+            "org.medlix.example3.medlix_data_vault.provider",
+        )
     }
 }

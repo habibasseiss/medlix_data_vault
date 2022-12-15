@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.medlix.medlix_data_vault">
 
+    <queries>
+        <provider android:authorities="org.medlix.example1.medlix_data_vault.provider"
+            android:exported="false" />
+        <provider android:authorities="org.medlix.example2.medlix_data_vault.provider"
+            android:exported="false" />
+    </queries>
+
     <!-- Using permission to behave like a requesting app -->
     <uses-permission android:name="org.medlix.SharedItems.medlix_data_vault.permissions.DATA_VAULT_PROVIDER" />
 
@@ -9,7 +16,7 @@
     <permission
         android:name="org.medlix.SharedItems.medlix_data_vault.permissions.DATA_VAULT_PROVIDER"
         android:label="Full access to MedLixDataVault data"
-        android:protectionLevel="normal" />
+        android:protectionLevel="signature" />
 
     <application>
         <provider

@@ -19,9 +19,8 @@ class MedlixDataVaultContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         context?.let {
             flutterSecureStorage = FlutterSecureStorage(it)
-            // Currently, the authority is based on the package name of the app.
-            // In the future, we will need to change the whole schema to fetch
-            // authorities from different apps.
+
+            // authority is based on the package name of the app
             authority = "${it.packageName}.medlix_data_vault.provider"
             contentUri = Uri.parse("content://${authority}")
 
