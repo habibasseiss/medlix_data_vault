@@ -10,7 +10,7 @@ import android.util.Log
 
 class MedlixDataVaultContentProvider : ContentProvider() {
 
-    private lateinit var sUriMatcher : UriMatcher
+    private lateinit var sUriMatcher: UriMatcher
 
     private lateinit var flutterSecureStorage: FlutterSecureStorage
     private lateinit var authority: String
@@ -27,7 +27,7 @@ class MedlixDataVaultContentProvider : ContentProvider() {
             // intialize the URIs
             initializeUriMatching()
 
-            Log.d(MedlixDataVaultPlugin.TAG, "onCreate: $contentUri")
+            Log.d(MedlixDataVaultPlugin.TAG, "Created ContentProvider: $contentUri")
         }
 
         return true
@@ -38,7 +38,7 @@ class MedlixDataVaultContentProvider : ContentProvider() {
         return 0
     }
 
-    override fun getType(uri: Uri) : String = when(sUriMatcher.match(uri)) {
+    override fun getType(uri: Uri): String = when (sUriMatcher.match(uri)) {
         URI_ITEM_ID -> "vnd.android.cursor.item/vnd.$authority.$TABLE_NAME"
         else -> throw IllegalArgumentException("Unsupported URI: $uri")
     }
@@ -49,14 +49,14 @@ class MedlixDataVaultContentProvider : ContentProvider() {
     }
 
     override fun query(
-        uri: Uri, projection: Array<String>?, selection: String?,
-        selectionArgs: Array<String>?, sortOrder: String?
+        uri: Uri,
+        projection: Array<String>?,
+        selection: String?,
+        selectionArgs: Array<String>?,
+        sortOrder: String?
     ): Cursor {
-        Log.d(MedlixDataVaultPlugin.TAG, "query: $uri, $projection, $selection, $selectionArgs, $sortOrder")
-
-        when(sUriMatcher.match(uri)) {
+        when (sUriMatcher.match(uri)) {
             URI_ITEM_ID -> {
-                Log.d(MedlixDataVaultPlugin.TAG, "query: URI_ITEM_ID")
                 val key = uri.lastPathSegment
                 val value = flutterSecureStorage.read(key)
 
@@ -71,7 +71,6 @@ class MedlixDataVaultContentProvider : ContentProvider() {
                 return cursor
             }
             URI_ITEMS -> {
-                Log.d(MedlixDataVaultPlugin.TAG, "query: URI_ITEMS")
                 val cursor = MatrixCursor(projection)
                 val builder = cursor.newRow()
 
@@ -88,11 +87,11 @@ class MedlixDataVaultContentProvider : ContentProvider() {
     }
 
     override fun update(
-        uri: Uri, values: ContentValues?, selection: String?,
-        selectionArgs: Array<String>?
+        uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<String>?
     ): Int {
-        Log.d(MedlixDataVaultPlugin.TAG, "update: $uri")
-        return 0
+        throw  UnsupportedOperationException(
+            "This ContentProvider does not support updates"
+        )
     }
 
     // Add the URI's that can be matched on this content provider
