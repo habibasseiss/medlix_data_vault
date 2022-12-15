@@ -3,12 +3,13 @@
     package="org.medlix.medlix_data_vault">
 
     <!-- Using permission to behave like a requesting app -->
-    <uses-permission android:name="${applicationId}.medlix_data_vault.permissions.DATA_VAULT_PROVIDER" />
+    <uses-permission android:name="org.medlix.SharedItems.medlix_data_vault.permissions.DATA_VAULT_PROVIDER" />
 
     <!-- Declaring permission to behave like a provider app-->
     <permission
-        android:name="${applicationId}.medlix_data_vault.permissions.DATA_VAULT_PROVIDER"
-        android:protectionLevel="signature" />
+        android:name="org.medlix.SharedItems.medlix_data_vault.permissions.DATA_VAULT_PROVIDER"
+        android:label="Full access to MedLixDataVault data"
+        android:protectionLevel="normal" />
 
     <application>
         <provider
@@ -16,7 +17,7 @@
             android:authorities="${applicationId}.medlix_data_vault.provider"
             android:enabled="true"
             android:exported="true"
-            android:permission="${applicationId}.medlix_data_vault.permissions.DATA_VAULT_PROVIDER" />
+            android:permission="org.medlix.SharedItems.medlix_data_vault.permissions.DATA_VAULT_PROVIDER" />
     </application>
 
 </manifest>
