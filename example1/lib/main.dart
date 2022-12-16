@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medlix_data_vault/medlix_data_vault.dart';
 
-const key = 'secure_key_test_134u1984';
+import './secure_key_counter.dart';
 
 final storage = MedlixDataVault(
   iosOptions: const IosOptions(
@@ -22,125 +22,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MedlixDataVault Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  String? _counter;
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addObserver(this);
-    _startCounter();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    _startCounter();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  void _startCounter() async {
-    var value = await storage.read(key: key);
-
-    if (value == null) {
-      value = '0';
-      await storage.write(key: key, value: value);
-    }
-
-    debugPrint(await storage.read(key: key));
-
-    setState(() {
-      _counter = value;
-    });
-  }
-
-  void _incrementCounter() async {
-    var value = await storage.read(key: key);
-    value ??= '0';
-    value = (int.parse(value) + 1).toString();
-    await storage.write(key: key, value: value);
-    debugPrint(await storage.read(key: key));
-
-    value = await storage.read(key: key);
-
-    setState(() {
-      _counter = value;
-    });
-  }
-
-  void _removeKey() async {
-    await storage.delete(key: key);
-
-    debugPrint('key $key removed');
-
-    setState(() {
-      _counter = '0';
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'The following value is stored in the "data vault" and shared among apps in the same group:',
-                textAlign: TextAlign.center,
-              ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => SecureKeyCounter(
+              storage: storage,
+              storageKey: 'secure_key_test_134u1984',
             ),
-            Text(
-              _counter ?? '0',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(height: 10),
-          FloatingActionButton(
-            onPressed: _removeKey,
-            tooltip: 'Increment',
-            child: const Icon(Icons.delete),
-          ),
-        ],
-      ),
+      },
     );
   }
 }
