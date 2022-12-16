@@ -1,5 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.medlix.example1">
+
+    <queries>
+        <provider
+            android:authorities="org.medlix.example1.medlix_data_vault.provider"
+            android:exported="false" />
+        <provider
+            android:authorities="org.medlix.example2.medlix_data_vault.provider"
+            android:exported="false" />
+    </queries>
+
    <application
         android:label="example1"
         android:name="${applicationName}"
