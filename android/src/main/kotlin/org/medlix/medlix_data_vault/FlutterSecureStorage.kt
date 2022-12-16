@@ -33,16 +33,16 @@ class FlutterSecureStorage(context: Context) {
         return preferences.getString(key, null)
     }
 
-    fun write(key: String?, value: String?) {
+    fun write(key: String?, value: String?): Boolean {
         val editor = preferences.edit()
         editor.putString(key, value)
         editor.apply()
+        return preferences.contains(key)
     }
 
-    fun delete(key: String?) {
+    fun delete(key: String?): Boolean {
         val editor = preferences.edit()
-        editor.remove(key)
-        editor.apply()
+        return editor.remove(key).commit()
     }
 
     companion object {

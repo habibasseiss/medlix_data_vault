@@ -15,6 +15,7 @@ class MedlixDataVaultContentProvider : ContentProvider() {
     private lateinit var flutterSecureStorage: FlutterSecureStorage
     private lateinit var authority: String
     private lateinit var contentUri: Uri
+    private lateinit var keysContentUri: Uri
 
     override fun onCreate(): Boolean {
         context?.let {
@@ -23,6 +24,7 @@ class MedlixDataVaultContentProvider : ContentProvider() {
             // authority is based on the package name of the app
             authority = "${it.packageName}.medlix_data_vault.provider"
             contentUri = Uri.parse("content://${authority}")
+            keysContentUri = Uri.parse("content://${authority}/${TABLE_NAME}")
 
             // intialize the URIs
             initializeUriMatching()
@@ -35,7 +37,18 @@ class MedlixDataVaultContentProvider : ContentProvider() {
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
         Log.d(MedlixDataVaultPlugin.TAG, "delete: $uri")
-        return 0
+
+        return when (sUriMatcher.match(uri)) {
+            URI_ITEM_ID -> {
+                val key = uri.lastPathSegment
+
+                if (flutterSecureStorage.delete(key)) 1
+                else 0
+            }
+            else -> {
+                throw IllegalArgumentException("Unknown URI: $uri")
+            }
+        }
     }
 
     override fun getType(uri: Uri): String = when (sUriMatcher.match(uri)) {
@@ -45,7 +58,18 @@ class MedlixDataVaultContentProvider : ContentProvider() {
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
         Log.d(MedlixDataVaultPlugin.TAG, "insert: $uri")
-        return Uri.EMPTY
+
+        when (sUriMatcher.match(uri)) {
+            URI_ITEM_ID -> {
+                val key = uri.lastPathSegment
+                val value = values?.getAsString("value")
+                if (key != null && value != null) {
+                    flutterSecureStorage.write(key, value)
+                }
+                return Uri.withAppendedPath(keysContentUri, key)
+            }
+            else -> throw IllegalArgumentException("Unsupported insert URI: $uri")
+        }
     }
 
     override fun query(
@@ -70,18 +94,7 @@ class MedlixDataVaultContentProvider : ContentProvider() {
 
                 return cursor
             }
-            URI_ITEMS -> {
-                val cursor = MatrixCursor(projection)
-                val builder = cursor.newRow()
-
-                // for each column in projection
-                projection?.forEach {
-                    builder.add(it, "value")
-                }
-
-                return cursor
-            }
-            else -> throw IllegalArgumentException("Unsupported URI: $uri")
+            else -> throw IllegalArgumentException("Unsupported query URI: $uri")
 
         }
     }
