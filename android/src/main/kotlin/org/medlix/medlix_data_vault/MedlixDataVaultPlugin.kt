@@ -1,6 +1,7 @@
 package org.medlix.medlix_data_vault
 
 import android.os.Build
+import android.util.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
 import io.flutter.plugin.common.MethodCall
@@ -26,7 +27,14 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
 
         flutterSecureStorage = FlutterSecureStorage(flutterPluginBinding.applicationContext)
         contentProvider = MedlixDataVaultContentProvider()
-        contentResolver = MedlixDataVaultContentResolver(flutterPluginBinding.applicationContext.contentResolver)
+        contentResolver = MedlixDataVaultContentResolver(
+            flutterPluginBinding.applicationContext.contentResolver,
+            arrayOf(
+                "org.medlix.example1.medlix_data_vault.provider",
+                "org.medlix.example2.medlix_data_vault.provider",
+                "org.medlix.example3.medlix_data_vault.provider",
+            ),
+        )
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {

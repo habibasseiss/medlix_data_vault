@@ -8,6 +8,12 @@ final storage = MedlixDataVault(
     teamId: 'J3QC37L24N',
     groupId: 'org.medlix.SharedItems',
   ),
+  androidOptions: const AndroidOptions(
+    packageNames: [
+      'org.medlix.example1',
+      'org.medlix.example2',
+    ],
+  ),
 );
 
 void main() async {

@@ -5,12 +5,15 @@ import android.content.ContentValues
 import android.net.Uri
 import android.util.Log
 
-class MedlixDataVaultContentResolver(private val contentResolver: ContentResolver) {
+class MedlixDataVaultContentResolver(
+    private val contentResolver: ContentResolver,
+    private val providerAuthorities: Array<String>,
+) {
 
     fun getKey(key: String): String? {
         var value: String? = null
 
-        for (providerAuthority in providerAthorities) {
+        for (providerAuthority in providerAuthorities) {
             try {
                 val providerUri = "content://$providerAuthority/keys/$key"
                 val cursor = contentResolver.query(
@@ -43,7 +46,7 @@ class MedlixDataVaultContentResolver(private val contentResolver: ContentResolve
     }
 
     fun insertKey(key: String, value: String) {
-        for (providerAuthority in providerAthorities) {
+        for (providerAuthority in providerAuthorities) {
             try {
                 val providerUri = "content://$providerAuthority/keys/$key"
                 val values = ContentValues()
@@ -63,7 +66,7 @@ class MedlixDataVaultContentResolver(private val contentResolver: ContentResolve
     }
 
     fun deleteKey(key: String) {
-        for (providerAuthority in providerAthorities) {
+        for (providerAuthority in providerAuthorities) {
             try {
                 val providerUri = "content://$providerAuthority/keys/$key"
                 val count = contentResolver.delete(
@@ -82,14 +85,5 @@ class MedlixDataVaultContentResolver(private val contentResolver: ContentResolve
                 )
             }
         }
-    }
-
-    companion object {
-        // TODO: make this configurable
-        private val providerAthorities = arrayOf(
-            "org.medlix.example1.medlix_data_vault.provider",
-            "org.medlix.example2.medlix_data_vault.provider",
-            "org.medlix.example3.medlix_data_vault.provider",
-        )
     }
 }

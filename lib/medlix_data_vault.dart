@@ -5,14 +5,16 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:medlix_data_vault/medlix_data_vault_platform_interface.dart';
 
-part 'options/ios_options.dart';
+part 'options/native_options.dart';
 part 'options/options.dart';
 
 class MedlixDataVault {
   final IosOptions iosOptions;
+  final AndroidOptions androidOptions;
 
   MedlixDataVault({
     this.iosOptions = IosOptions.defaultOptions,
+    this.androidOptions = AndroidOptions.defaultOptions,
   });
 
   MedlixDataVaultPlatform get _platform => MedlixDataVaultPlatform.instance;
@@ -47,7 +49,7 @@ class MedlixDataVault {
     if (Platform.isIOS) {
       return iosOptions.params;
     } else if (Platform.isAndroid) {
-      return {};
+      return androidOptions.params;
     } else {
       return {};
     }

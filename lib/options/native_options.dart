@@ -25,3 +25,17 @@ class IosOptions extends Options {
     return null;
   }
 }
+
+class AndroidOptions extends Options {
+  final List<String>? _packageNames;
+
+  const AndroidOptions({List<String>? packageNames})
+      : _packageNames = packageNames;
+
+  static const AndroidOptions defaultOptions = AndroidOptions();
+
+  @override
+  Map<String, String> toMap() => <String, String>{
+        if (_packageNames != null) 'packageNames': _packageNames!.join(','),
+      };
+}
