@@ -29,11 +29,6 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
         contentProvider = MedlixDataVaultContentProvider()
         contentResolver = MedlixDataVaultContentResolver(
             flutterPluginBinding.applicationContext.contentResolver,
-            arrayOf(
-                "org.medlix.example1.medlix_data_vault.provider",
-                "org.medlix.example2.medlix_data_vault.provider",
-                "org.medlix.example3.medlix_data_vault.provider",
-            ),
         )
     }
 
@@ -45,9 +40,11 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
             "read" -> {
                 val key = call.argument<String>("key")
                 var value: String? = null
+                val options = call.argument<Map<String, Any>>("options")
+                val packageNames = packageNamesToAuthorities(options?.get("packageNames") as String?)
 
                 if (key != null) {
-                    value = contentResolver.getKey(key)
+                    value = contentResolver.getKey(key, packageNames)
                 }
 
                 result.success(value)
@@ -55,18 +52,22 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
             "write" -> {
                 val key = call.argument<String>("key")
                 val value = call.argument<String>("value")
+                val options = call.argument<Map<String, Any>>("options")
+                val packageNames = packageNamesToAuthorities(options?.get("packageNames") as String?)
 
                 if (key != null && value != null) {
-                    contentResolver.insertKey(key, value)
+                    contentResolver.insertKey(key, value, packageNames)
                 }
 
                 result.success(null)
             }
             "delete" -> {
                 val key = call.argument<String>("key")
+                val options = call.argument<Map<String, Any>>("options")
+                val packageNames = packageNamesToAuthorities(options?.get("packageNames") as String?)
 
                 if (key != null) {
-                    contentResolver.deleteKey(key)
+                    contentResolver.deleteKey(key, packageNames)
                 }
 
                 result.success(null)
@@ -79,6 +80,13 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onDetachedFromEngine(binding: FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+    }
+
+    private fun packageNamesToAuthorities(packageNames: String?): Array<String>? {
+        return packageNames
+            ?.split(",")
+            ?.map { "$it.medlix_data_vault.provider" }
+            ?.toTypedArray()
     }
 
     companion object {

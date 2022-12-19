@@ -5,15 +5,12 @@ import android.content.ContentValues
 import android.net.Uri
 import android.util.Log
 
-class MedlixDataVaultContentResolver(
-    private val contentResolver: ContentResolver,
-    private val providerAuthorities: Array<String>,
-) {
+class MedlixDataVaultContentResolver(private val contentResolver: ContentResolver) {
 
-    fun getKey(key: String): String? {
+    fun getKey(key: String, packageNames: Array<String>?): String? {
         var value: String? = null
 
-        for (providerAuthority in providerAuthorities) {
+        for (providerAuthority in packageNames ?: arrayOf()) {
             try {
                 val providerUri = "content://$providerAuthority/keys/$key"
                 val cursor = contentResolver.query(
@@ -45,8 +42,8 @@ class MedlixDataVaultContentResolver(
         return null
     }
 
-    fun insertKey(key: String, value: String) {
-        for (providerAuthority in providerAuthorities) {
+    fun insertKey(key: String, value: String, packageNames: Array<String>?) {
+        for (providerAuthority in packageNames ?: arrayOf()) {
             try {
                 val providerUri = "content://$providerAuthority/keys/$key"
                 val values = ContentValues()
@@ -65,8 +62,8 @@ class MedlixDataVaultContentResolver(
         }
     }
 
-    fun deleteKey(key: String) {
-        for (providerAuthority in providerAuthorities) {
+    fun deleteKey(key: String, packageNames: Array<String>?) {
+        for (providerAuthority in packageNames ?: arrayOf()) {
             try {
                 val providerUri = "content://$providerAuthority/keys/$key"
                 val count = contentResolver.delete(
