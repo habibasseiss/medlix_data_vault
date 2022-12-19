@@ -1,7 +1,5 @@
 package org.medlix.medlix_data_vault
 
-import android.os.Build
-import android.util.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
 import io.flutter.plugin.common.MethodCall
@@ -34,9 +32,6 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
-            "getPlatformVersion" -> {
-                result.success("Android " + Build.VERSION.RELEASE)
-            }
             "read" -> {
                 val key = call.argument<String>("key")
                 var value: String? = null

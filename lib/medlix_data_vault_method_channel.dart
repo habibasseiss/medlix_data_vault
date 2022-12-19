@@ -10,13 +10,6 @@ class MethodChannelMedlixDataVault extends MedlixDataVaultPlatform {
   final methodChannel = const MethodChannel('org.medlix.plugins/data_vault');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version =
-        await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
-  }
-
-  @override
   Future<void> write({
     required String key,
     required String value,

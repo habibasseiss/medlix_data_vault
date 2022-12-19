@@ -19,10 +19,6 @@ class MedlixDataVault {
 
   MedlixDataVaultPlatform get _platform => MedlixDataVaultPlatform.instance;
 
-  Future<String?> getPlatformVersion() {
-    return _platform.getPlatformVersion();
-  }
-
   Future<void> write({required String key, required String value}) {
     return _platform.write(
       key: key,

@@ -23,10 +23,6 @@ abstract class MedlixDataVaultPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
-  }
-
   Future<void> write({
     required String key,
     required String value,
