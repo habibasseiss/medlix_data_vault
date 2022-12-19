@@ -19,12 +19,12 @@ public class SwiftMedlixDataVaultPlugin: NSObject, FlutterPlugin {
             write(call, result)
         case "delete":
             delete(call, result)
-        // case "deleteAll":
-        //     deleteAll(call, result)
-        // case "readAll":
-        //     readAll(call, result)
-        // case "containsKey":
-        //     containsKey(call, result)
+         case "deleteAll":
+             deleteAll(call, result)
+         case "readAll":
+             readAll(call, result)
+         case "containsKey":
+             containsKey(call, result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -73,6 +73,33 @@ public class SwiftMedlixDataVaultPlugin: NSObject, FlutterPlugin {
         let response = flutterSecureStorageManager.delete(key: values.key!, groupId: values.groupId, accountName: values.accountName, synchronizable: values.synchronizable)
         
         result(response)
+    }
+    
+    private func deleteAll(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let values = parseCall(call)
+        
+        let response = flutterSecureStorageManager.deleteAll(groupId: values.groupId, accountName: values.accountName, synchronizable: values.synchronizable)
+        
+        result(response)
+    }
+    
+    private func readAll(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let values = parseCall(call)
+        
+        let response = flutterSecureStorageManager.readAll(groupId: values.groupId, accountName: values.accountName, synchronizable: values.synchronizable)
+        
+        result(response.value);
+    }
+    
+    private func containsKey(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let values = parseCall(call)
+        if (values.key == nil) {
+            result(FlutterError.init(code: "Missing Parameter", message: "containsKey requires key parameter", details: nil))
+        }
+        
+        let response = flutterSecureStorageManager.containsKey(key: values.key!, groupId: values.groupId, accountName: values.accountName, synchronizable: values.synchronizable)
+        
+        result(response);
     }
 
     private func parseCall(_ call: FlutterMethodCall) -> FlutterSecureStorageRequest {

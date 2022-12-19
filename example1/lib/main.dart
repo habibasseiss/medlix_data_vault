@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medlix_data_vault/medlix_data_vault.dart';
 
 import './secure_key_counter.dart';
+import './settings_page.dart';
 
 final storage = MedlixDataVault(
   iosOptions: const IosOptions(
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => SecureKeyCounter(
               storage: storage,
               storageKey: 'secure_key_test_134u1984',
+            ),
+        '/settings': (context) => SettingsPage(
+              storage: storage,
             ),
       },
     );

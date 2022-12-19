@@ -43,4 +43,18 @@ class MethodChannelMedlixDataVault extends MedlixDataVaultPlatform {
       'options': options,
     });
   }
+
+  @override
+  Future<Map<String, String>> readAll({
+    required Map<String, String> options,
+  }) async {
+    final results = await methodChannel.invokeMethod<Map>(
+      'readAll',
+      {
+        'options': options,
+      },
+    );
+
+    return results?.cast<String, String>() ?? <String, String>{};
+  }
 }

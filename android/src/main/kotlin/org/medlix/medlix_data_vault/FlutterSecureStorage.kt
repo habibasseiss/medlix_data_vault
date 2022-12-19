@@ -2,6 +2,7 @@ package org.medlix.medlix_data_vault
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import java.io.IOException
@@ -31,6 +32,10 @@ class FlutterSecureStorage(context: Context) {
 
     fun read(key: String?): String? {
         return preferences.getString(key, null)
+    }
+
+    fun readAll(): Map<String, String> {
+        return preferences.all.mapValues { it.value.toString() }
     }
 
     fun write(key: String?, value: String?): Boolean {

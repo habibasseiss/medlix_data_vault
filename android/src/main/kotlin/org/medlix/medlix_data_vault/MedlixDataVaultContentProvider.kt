@@ -53,6 +53,7 @@ class MedlixDataVaultContentProvider : ContentProvider() {
 
     override fun getType(uri: Uri): String = when (sUriMatcher.match(uri)) {
         URI_ITEM_ID -> "vnd.android.cursor.item/vnd.$authority.$TABLE_NAME"
+        URI_ITEM_LIST -> "vnd.android.cursor.dir/vnd.$authority.$TABLE_NAME"
         else -> throw IllegalArgumentException("Unsupported URI: $uri")
     }
 
@@ -94,6 +95,22 @@ class MedlixDataVaultContentProvider : ContentProvider() {
 
                 return cursor
             }
+            URI_ITEM_LIST -> {
+                val map = flutterSecureStorage.readAll()
+                val cursor = MatrixCursor(projection)
+
+                for ((key, value) in map) {
+                    val builder = cursor.newRow()
+                    projection?.forEach {
+                        if (it == "key") builder.add(it, key)
+                        if (it == "value") builder.add(it, value)
+                    }
+                }
+//                Log.e(MedlixDataVaultPlugin.TAG, "projection: ${projection?.contentToString()}")
+//                Log.d(MedlixDataVaultPlugin.TAG, "query: $uri, $projection, $map")
+
+                return cursor
+            }
             else -> throw IllegalArgumentException("Unsupported query URI: $uri")
 
         }
@@ -111,13 +128,13 @@ class MedlixDataVaultContentProvider : ContentProvider() {
     private fun initializeUriMatching() {
         sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
         sUriMatcher.addURI(authority, "${TABLE_NAME}/*", URI_ITEM_ID)
-        sUriMatcher.addURI(authority, TABLE_NAME, URI_ITEMS)
+        sUriMatcher.addURI(authority, "${TABLE_NAME}/", URI_ITEM_LIST)
     }
 
     // The URI Codes
     companion object {
         private const val URI_ITEM_ID = 1
-        private const val URI_ITEMS = 2
+        private const val URI_ITEM_LIST = 2
         private const val TABLE_NAME = "keys"
     }
 }

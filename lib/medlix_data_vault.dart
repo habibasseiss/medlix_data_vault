@@ -41,6 +41,12 @@ class MedlixDataVault {
     );
   }
 
+  Future<Map<String, String>> readAll() {
+    return _platform.readAll(
+      options: _buildOptions,
+    );
+  }
+
   Map<String, String> get _buildOptions {
     if (Platform.isIOS) {
       return iosOptions.params;

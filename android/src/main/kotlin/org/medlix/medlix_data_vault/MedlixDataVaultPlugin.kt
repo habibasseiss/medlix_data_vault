@@ -67,6 +67,27 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
 
                 result.success(null)
             }
+            "readAll" -> {
+                val options = call.argument<Map<String, Any>>("options")
+                val packageNames = packageNamesToAuthorities(options?.get("packageNames") as String?)
+
+                val values = contentResolver.getAllKeys(packageNames)
+
+                result.success(values)
+            }
+            "containsKey" -> {
+                val key = call.argument<String>("key")
+                val options = call.argument<Map<String, Any>>("options")
+                val packageNames = packageNamesToAuthorities(options?.get("packageNames") as String?)
+
+                if (key != null) {
+                    val containsKey = contentResolver.containsKey(key, packageNames)
+
+                    result.success(containsKey)
+                } else {
+                    result.success(false)
+                }
+            }
             else -> {
                 result.notImplemented()
             }

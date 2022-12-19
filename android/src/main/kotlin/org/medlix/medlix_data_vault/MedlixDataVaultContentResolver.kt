@@ -83,4 +83,44 @@ class MedlixDataVaultContentResolver(private val contentResolver: ContentResolve
             }
         }
     }
+
+    fun getAllKeys(packageNames: Array<String>?): Map<String, String> {
+        val map = mutableMapOf<String, String>()
+
+        for (providerAuthority in packageNames ?: arrayOf()) {
+            try {
+                val providerUri = "content://$providerAuthority/keys"
+                val cursor = contentResolver.query(
+                    Uri.parse(providerUri), // The provider Uri
+                    arrayOf("key", "value"), // Return the "key" and "value" columns
+                    null, // Return all rows
+                    null, // No selection arguments
+                    null // Default sort order
+                )
+
+                Log.d(
+                    MedlixDataVaultPlugin.TAG,
+                    "Getting all keys from provider: $providerAuthority"
+                )
+                cursor?.let {
+                    while (it.moveToNext()) {
+                        val key = it.getString(0)
+                        val value = it.getString(1)
+                        map[key] = value
+
+                        Log.d(MedlixDataVaultPlugin.TAG, "`$key` = `$value`")
+                    }
+                }
+
+                cursor?.close()
+            } catch (e: Exception) {
+                Log.w(MedlixDataVaultPlugin.TAG, "Cannot get all keys from provider: $providerAuthority")
+            }
+        }
+        return map
+    }
+
+    fun containsKey(key: String, packageNames: Array<String>?): Boolean {
+        return getKey(key, packageNames) != null
+    }
 }

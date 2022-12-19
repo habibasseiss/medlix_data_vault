@@ -49,4 +49,10 @@ class ExtendsMedlixDataVaultPlatform extends MedlixDataVaultPlatform {
     required Map<String, String> options,
   }) =>
       Future<void>.value();
+
+  @override
+  Future<Map<String, String>> readAll({
+    required Map<String, String> options,
+  }) =>
+      Future.value(<String, String>{});
 }

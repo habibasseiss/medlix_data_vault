@@ -82,6 +82,14 @@ class _SecureKeyCounterState extends State<SecureKeyCounter>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Secure Key Counter'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.of(context).pushNamed('/settings');
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(
