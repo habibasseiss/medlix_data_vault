@@ -40,10 +40,49 @@ CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 
 ### Android
 
-On Android, the plugin uses the [EncryptedSharedPreferences](https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences) class to securely
+On Android, the plugin uses the [`EncryptedSharedPreferences`](https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences) class to securely
 store data, which requires the minimum API level to be 23 (Android 6.0).
 Therefore, the `minSdkVersion` in the `android/app/build.gradle` file must be
 set to 23 or higher.
+
+The plugin works by allowing each native Android app that uses it to define a
+[`ContentProvider`](https://developer.android.com/guide/topics/providers/content-providers)
+that can be used to share data stored via `EncryptedSharedPreferences`. The
+plugin also implements a [`ContentResolver`](https://developer.android.com/reference/android/content/ContentResolver)
+that can be used to access the shared data. Therefore, the plugin is both a
+provider and a client of the shared data.
+
+The overall process for sharing data between apps is as follows: when a key is
+supposed to be stored, the plugin asks for all apps that are part of the same
+group to store the key. The same happens for read and delete operations. In the
+read operation, the plugin returns the first key found in the group.
+
+For the plugin to work on Android, it's necessary to configure the native apps
+in its `AndroidManifest.xml` file in a specific way. The following code must be
+added to the `AndroidManifest.xml` file of each app that uses the plugin (e.g.,
+`example1` and `example2` apps):
+
+```xml
+<queries>
+    <provider
+        android:authorities="org.medlix.example1.medlix_data_vault.provider"
+        android:exported="false" />
+    <provider
+        android:authorities="org.medlix.example2.medlix_data_vault.provider"
+        android:exported="false" />
+</queries>
+```
+
+In this example, the `example1` and `example2` have the package names
+`org.medlix.example1` and `org.medlix.example2`, respectively. The `queries`
+element indicates that the current app can make queries to the providers defined
+in the `provider` elements. The `android:authorities` attribute defines the
+unique identifier for the provider in the plugin. It is required that the
+`android:authorities` attribute has the format
+`<package_name>.medlix_data_vault.provider` (i.e., the package name of the app
+concatenated with `.medlix_data_vault.provider`). TODO: this could be improved
+in the future.
+
 
 ### Flutter
 
