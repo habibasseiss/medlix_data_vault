@@ -48,4 +48,8 @@ abstract class MedlixDataVaultPlatform extends PlatformInterface {
   Future<Map<String, String>> readAll({
     required Map<String, String> options,
   });
+
+  Future<void> deleteAll({
+    required Map<String, String> options,
+  });
 }

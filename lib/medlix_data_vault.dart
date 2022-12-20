@@ -47,6 +47,12 @@ class MedlixDataVault {
     );
   }
 
+  Future<void> deleteAll() {
+    return _platform.deleteAll(
+      options: _buildOptions,
+    );
+  }
+
   Map<String, String> get _buildOptions {
     if (Platform.isIOS) {
       return iosOptions.params;

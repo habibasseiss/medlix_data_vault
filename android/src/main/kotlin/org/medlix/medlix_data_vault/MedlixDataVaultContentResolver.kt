@@ -84,6 +84,28 @@ class MedlixDataVaultContentResolver(private val contentResolver: ContentResolve
         }
     }
 
+    fun deleteAllKeys(packageNames: Array<String>?) {
+        for (providerAuthority in packageNames ?: arrayOf()) {
+            try {
+                val providerUri = "content://$providerAuthority/keys"
+                val count = contentResolver.delete(
+                    Uri.parse(providerUri), // The provider Uri
+                    null, // Return all rows
+                    null // No selection arguments
+                )
+
+                Log.d(
+                    MedlixDataVaultPlugin.TAG,
+                    "Deleted $count row(s) from provider: $providerAuthority"
+                )
+            } catch (e: Exception) {
+                Log.w(
+                    MedlixDataVaultPlugin.TAG, "Cannot delete key from provider: $providerAuthority"
+                )
+            }
+        }
+    }
+
     fun getAllKeys(packageNames: Array<String>?): Map<String, String> {
         val map = mutableMapOf<String, String>()
 

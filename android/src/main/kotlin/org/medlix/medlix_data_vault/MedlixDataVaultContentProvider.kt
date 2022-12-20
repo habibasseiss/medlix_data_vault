@@ -26,7 +26,7 @@ class MedlixDataVaultContentProvider : ContentProvider() {
             contentUri = Uri.parse("content://${authority}")
             keysContentUri = Uri.parse("content://${authority}/${TABLE_NAME}")
 
-            // intialize the URIs
+            // initialize the URIs
             initializeUriMatching()
 
             Log.d(MedlixDataVaultPlugin.TAG, "Created ContentProvider: $contentUri")
@@ -44,6 +44,9 @@ class MedlixDataVaultContentProvider : ContentProvider() {
 
                 if (flutterSecureStorage.delete(key)) 1
                 else 0
+            }
+            URI_ITEM_LIST -> {
+                flutterSecureStorage.deleteAll()
             }
             else -> {
                 throw IllegalArgumentException("Unknown URI: $uri")

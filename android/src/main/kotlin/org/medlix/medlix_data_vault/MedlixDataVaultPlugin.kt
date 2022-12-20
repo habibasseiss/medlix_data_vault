@@ -67,6 +67,14 @@ class MedlixDataVaultPlugin : FlutterPlugin, MethodCallHandler {
 
                 result.success(null)
             }
+            "deleteAll" -> {
+                val options = call.argument<Map<String, Any>>("options")
+                val packageNames = packageNamesToAuthorities(options?.get("packageNames") as String?)
+
+                contentResolver.deleteAllKeys(packageNames)
+
+                result.success(null)
+            }
             "readAll" -> {
                 val options = call.argument<Map<String, Any>>("options")
                 val packageNames = packageNamesToAuthorities(options?.get("packageNames") as String?)

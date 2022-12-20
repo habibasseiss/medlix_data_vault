@@ -67,10 +67,10 @@ class _SecureKeyCounterState extends State<SecureKeyCounter>
     });
   }
 
-  void _removeKey() async {
+  void _deleteKey() async {
     await widget.storage.delete(key: widget.storageKey);
 
-    debugPrint('key $widget.storageKey removed');
+    debugPrint('key $widget.storageKey deleted');
 
     setState(() {
       _counter = '0';
@@ -137,10 +137,10 @@ class _SecureKeyCounterState extends State<SecureKeyCounter>
           ),
           const SizedBox(height: 10),
           FloatingActionButton.extended(
-            heroTag: 'removeKey',
-            onPressed: _removeKey,
-            tooltip: 'Increment',
-            label: const Text('Remove Key'),
+            heroTag: 'deleteKey',
+            onPressed: _deleteKey,
+            tooltip: 'Delete Key',
+            label: const Text('Delete Key'),
             icon: const Icon(Icons.delete),
           ),
         ],

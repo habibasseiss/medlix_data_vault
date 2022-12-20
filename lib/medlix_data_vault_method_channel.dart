@@ -57,4 +57,15 @@ class MethodChannelMedlixDataVault extends MedlixDataVaultPlatform {
 
     return results?.cast<String, String>() ?? <String, String>{};
   }
+
+  @override
+  Future<void> deleteAll({
+    required Map<String, String> options,
+  }) =>
+      methodChannel.invokeMethod<void>(
+        'deleteAll',
+        {
+          'options': options,
+        },
+      );
 }

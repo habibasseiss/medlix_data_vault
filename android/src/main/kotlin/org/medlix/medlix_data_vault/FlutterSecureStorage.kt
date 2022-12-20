@@ -50,6 +50,16 @@ class FlutterSecureStorage(context: Context) {
         return editor.remove(key).commit()
     }
 
+    fun deleteAll(): Int {
+        val size = preferences.all.size
+        val editor = preferences.edit()
+        return if (editor.clear().commit()) {
+            size
+        } else {
+            0
+        }
+    }
+
     companion object {
         private const val PREFERENCES_FILE_NAME = "encrypted_preferences"
     }

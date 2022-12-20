@@ -27,20 +27,12 @@ class ExtendsMedlixDataVaultPlatform extends MedlixDataVaultPlatform {
   }) =>
       Future<void>.value();
 
-  // @override
-  // Future<void> deleteAll({required Map<String, String> options}) =>
-  //     Future<void>.value();
-
   @override
   Future<String?> read({
     required String key,
     required Map<String, String> options,
   }) =>
       Future<String?>.value();
-
-  // @override
-  // Future<Map<String, String>> readAll({required Map<String, String> options}) =>
-  //     Future.value(<String, String>{});
 
   @override
   Future<void> write({
@@ -55,4 +47,8 @@ class ExtendsMedlixDataVaultPlatform extends MedlixDataVaultPlatform {
     required Map<String, String> options,
   }) =>
       Future.value(<String, String>{});
+
+  @override
+  Future<void> deleteAll({required Map<String, String> options}) =>
+      Future<void>.value();
 }
